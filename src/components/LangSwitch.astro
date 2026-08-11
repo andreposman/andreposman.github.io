@@ -1,0 +1,37 @@
+---
+const locale = Astro.currentLocale ?? 'en';
+const isEn = locale === 'en';
+const other = isEn ? 'pt-br' : 'en';
+const otherHref = isEn ? '/pt-br/' : '/';
+const label = isEn ? 'PT' : 'EN';
+---
+
+<a class="lang-switch" href={otherHref} aria-label={`Switch to ${other}`}>
+	{label}
+</a>
+
+<style>
+	.lang-switch {
+		position: fixed;
+		top: 1.25rem;
+		right: 4.5rem;
+		z-index: 10;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.14em;
+		text-decoration: none;
+		color: var(--fg-dim);
+		padding: 0.6rem 0.75rem;
+		border: 1px solid var(--fg-dim);
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--bg) 80%, transparent);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		transition: color 0.25s ease, border-color 0.25s ease;
+	}
+
+	.lang-switch:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+</style>

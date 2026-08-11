@@ -1,0 +1,76 @@
+export const ptBR = {
+	nav: {
+		about: 'Sobre',
+		projects: 'Projetos',
+		timeline: 'Linha do tempo',
+		contact: 'Contato',
+	},
+	hero: {
+		name: 'André Posman',
+		title: 'Backend & Platform Engineer',
+		tagline: 'Construindo sistemas distribuídos que escalam pela América Latina.',
+	},
+	about: {
+		kicker: 'SOBRE',
+		heading: 'Sistemas backend, confiabilidade de plataforma & engenharia com IA.',
+		p1: 'Backend & Platform Engineer com mais de 7 anos construindo sistemas distribuídos e plataformas cloud-native. No Mercado Libre, liderei iniciativas de backend e infraestrutura Kubernetes pela América Latina — incluindo uma plataforma de testes de performance que reduziu custos de infra em <span class="accent">50%</span>.',
+		p2: 'Hoje, lidero a adoção de IA na engenharia do meu time — realizando workshops sobre ferramentas com LLMs, pipelines RAG e fluxos baseados em agentes que automatizam operações repetitivas de plataforma. Entreguei agentes internos que fazem diagnóstico de clusters, observabilidade de CRON jobs e triagem de incidentes de forma autônoma.',
+		education: 'Formação',
+		eduList: [
+			'FIAP — Bacharel em Engenharia da Computação (2013–2017)',
+			'FBr — MBA Arquitetura de Software Full Cycle (2023–2024)',
+		],
+		languages: 'Idiomas',
+		langList: ['Português (nativo)', 'Inglês (fluente)', 'Espanhol (profissional)'],
+		international: 'Internacional',
+		intlText: 'Bolsista para estudar Project Management & Business English na Ohio University. Curso de alemão básico em Munique.',
+	},
+	projects: {
+		kicker: 'PROJETOS',
+		heading: 'GitHub.',
+		stars: 'estrelas',
+		fallbackTitle: 'Trabalhos recentes',
+	},
+	timeline: {
+		kicker: 'LINHA DO TEMPO',
+		heading: 'Carreira.',
+		roles: [
+			{
+				date: 'Abr 2021 — Presente',
+				company: 'MercadoLibre',
+				role: 'Backend Engineer, Platform Engineer',
+				description: 'Liderei PTP — plataforma de perf. (<span class="accent">50%</span> economia), provisionamento de clusters K8s no Fury Core e sistema distribuído Kairos de CRON jobs na América Latina.',
+			},
+			{
+				date: 'Jun 2019 — Abr 2021',
+				company: 'Dafiti',
+				role: 'Software Engineer',
+				description: 'Desacoplei checkout do monolito em microsserviços Golang + Node.js/TS com React, GraphQL e RabbitMQ.',
+			},
+			{
+				date: 'Set 2018 — Jun 2019',
+				company: 'Wipro',
+				role: 'Full Stack Developer',
+				description: 'Full-stack com Python, C#, JS — crawlers de notas fiscais (Claro), reconstrução de plataforma de corretora (Bradesco) e portais regulatórios (Febraban).',
+			},
+		],
+	},
+	contact: {
+		kicker: 'CONTATO',
+		heading: 'Vamos conversar.',
+		nameLabel: 'Nome',
+		namePlaceholder: 'Seu nome',
+		emailLabel: 'Email',
+		emailPlaceholder: 'seu@email.com',
+		messageLabel: 'Mensagem',
+		messagePlaceholder: 'Conte-me sobre seu projeto ou oportunidade...',
+		submit: 'Enviar mensagem',
+		linkedinLabel: 'LINKEDIN',
+		linkedinValue: 'in/andreposman',
+		githubLabel: 'GITHUB',
+		githubValue: 'andreposman',
+	},
+	footer: {
+		builtWith: 'Feito com Astro & GSAP',
+	},
+};

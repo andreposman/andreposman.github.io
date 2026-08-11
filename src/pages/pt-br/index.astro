@@ -1,0 +1,50 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/newsreader/400.css';
+import '../../styles/global.css';
+import { t } from '../../i18n/index';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import GitHubProjects from '../../components/GitHubProjects.astro';
+import Timeline from '../../components/Timeline.astro';
+import Contact from '../../components/Contact.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import LangSwitch from '../../components/LangSwitch.astro';
+
+const locale = Astro.currentLocale ?? 'pt-br';
+const dict = t(locale);
+---
+
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem('theme');
+				var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>André Posman — Backend & Platform Engineer</title>
+	</head>
+	<body>
+		<LangSwitch />
+		<ThemeToggle />
+		<Hero t={dict} />
+		<About t={dict} />
+		<GitHubProjects lang={t} />
+		<Timeline t={dict} />
+		<Contact t={dict} />
+		<script>
+			import { initSmoothScroll } from '../../scripts/smooth-scroll';
+			initSmoothScroll();
+		</script>
+	</body>
+</html>

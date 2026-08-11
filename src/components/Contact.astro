@@ -1,0 +1,255 @@
+---
+import type { en } from '../i18n/en';
+
+interface Props {
+	t: typeof en;
+}
+
+const { t } = Astro.props;
+
+const linkedinUrl = 'https://www.linkedin.com/in/andreposman/';
+const githubUrl = 'https://github.com/andreposman';
+---
+
+<section class="contact" id="contact">
+	<hr class="hr-divider contact-divider-top" />
+	<div class="contact-inner">
+		<p class="kicker"><span class="kicker-accent">04</span> — {t.contact.kicker}</p>
+		<h2 class="section-heading reveal-line"><span class="reveal-line-inner">{t.contact.heading}</span></h2>
+
+		<div class="contact-grid">
+			<form class="contact-form" id="contact-form">
+				<div class="form-field">
+					<label for="name">{t.contact.nameLabel}</label>
+					<input type="text" id="name" name="name" placeholder={t.contact.namePlaceholder} required />
+				</div>
+				<div class="form-field">
+					<label for="email">{t.contact.emailLabel}</label>
+					<input type="email" id="email" name="email" placeholder={t.contact.emailPlaceholder} required />
+				</div>
+				<div class="form-field">
+					<label for="message">{t.contact.messageLabel}</label>
+					<textarea id="message" name="message" rows="5" placeholder={t.contact.messagePlaceholder} required></textarea>
+				</div>
+				<button type="submit" class="contact-submit">{t.contact.submit}</button>
+			</form>
+
+			<div class="contact-links">
+				<a class="contact-link" href={linkedinUrl} target="_blank" rel="noopener noreferrer">
+					<span class="contact-label">{t.contact.linkedinLabel}</span>
+					<span class="contact-value">{t.contact.linkedinValue}</span>
+					<span class="contact-arrow" aria-hidden="true">&nearr;</span>
+				</a>
+				<a class="contact-link" href={githubUrl} target="_blank" rel="noopener noreferrer">
+					<span class="contact-label">{t.contact.githubLabel}</span>
+					<span class="contact-value">{t.contact.githubValue}</span>
+					<span class="contact-arrow" aria-hidden="true">&nearr;</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.contact {
+		padding: 0 1.5rem 6rem;
+	}
+
+	.contact-inner {
+		max-width: 64rem;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.contact-divider-top {
+		max-width: 64rem;
+		margin: 0 auto 5rem;
+	}
+
+	.contact-grid {
+		margin-top: 1rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+	}
+
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.form-field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.form-field label {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--fg-dim);
+	}
+
+	.form-field input,
+	.form-field textarea {
+		font-family: var(--font-body);
+		font-size: 0.95rem;
+		padding: 0.75rem 1rem;
+		background: transparent;
+		border: 1px solid var(--fg-dim);
+		color: var(--fg);
+		outline: none;
+		transition: border-color 0.25s ease;
+		resize: vertical;
+	}
+
+	.form-field input:focus,
+	.form-field textarea:focus {
+		border-color: var(--accent);
+	}
+
+	.form-field input::placeholder,
+	.form-field textarea::placeholder {
+		color: var(--fg-dim);
+		opacity: 0.5;
+	}
+
+	.contact-submit {
+		align-self: flex-start;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		padding: 0.75rem 2rem;
+		background: transparent;
+		border: 1px solid var(--fg);
+		color: var(--fg);
+		cursor: pointer;
+		transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+	}
+
+	.contact-submit:hover {
+		background: var(--fg);
+		color: var(--bg);
+	}
+
+	.contact-links {
+		border: 1px solid var(--fg-dim);
+		align-self: flex-start;
+		width: 100%;
+	}
+
+	.contact-link {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 1.5rem;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.contact-link:not(:last-child) {
+		border-bottom: 1px solid var(--fg-dim);
+	}
+
+	.contact-label {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+		color: var(--fg-dim);
+		flex-shrink: 0;
+	}
+
+	.contact-value {
+		font-size: 1.05rem;
+		flex-grow: 1;
+		transition: color 0.25s ease;
+	}
+
+	.contact-link:hover .contact-value {
+		color: var(--accent);
+	}
+
+	.contact-arrow {
+		font-size: 1.1rem;
+		color: var(--fg-dim);
+	}
+
+	@media (max-width: 42rem) {
+		.contact-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.reveal-line {
+		display: block;
+		overflow: hidden;
+		margin: 0;
+	}
+
+	.reveal-line-inner {
+		display: block;
+	}
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const inners = document.querySelectorAll('.contact .reveal-line-inner');
+	const grid = document.querySelector('.contact-grid');
+
+	if (reduceMotion) {
+		gsap.set(inners, { yPercent: 0, opacity: 1 });
+		if (grid) gsap.set(grid, { opacity: 1, y: 0 });
+	} else {
+		gsap.set(inners, { yPercent: 110, opacity: 0 });
+		if (grid) gsap.set(grid, { opacity: 0, y: 16 });
+		gsap.to(inners, {
+			yPercent: 0,
+			opacity: 1,
+			duration: 0.8,
+			ease: 'power4.out',
+			scrollTrigger: {
+				trigger: '.contact',
+				start: 'top 70%',
+				toggleActions: 'play none none reverse',
+			},
+		});
+		if (grid) {
+			gsap.to(grid, {
+				opacity: 1,
+				y: 0,
+				duration: 0.6,
+				ease: 'power3.out',
+				delay: 0.1,
+				scrollTrigger: {
+					trigger: '.contact',
+					start: 'top 70%',
+					toggleActions: 'play none none reverse',
+				},
+			});
+		}
+	}
+
+	/* mailto form */
+	const form = document.getElementById('contact-form') as HTMLFormElement | null;
+	form?.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const fd = new FormData(form);
+		const name = (fd.get('name') as string || '').trim();
+		const email = (fd.get('email') as string || '').trim();
+		const message = (fd.get('message') as string || '').trim();
+		const body = `Hi André,\n\n${message}\n\n— ${name} (${email})`;
+		const mailto = `mailto:andre.posman@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
+		window.location.href = mailto;
+	});
+</script>

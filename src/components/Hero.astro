@@ -1,0 +1,138 @@
+---
+import type { en } from '../i18n/en';
+
+interface Props {
+	t: typeof en;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="hero" id="hero">
+	<canvas class="hero-canvas" aria-hidden="true"></canvas>
+	<div class="hero-scrim" aria-hidden="true"></div>
+	<div class="hero-content">
+		<p class="kicker hero-line"><span class="kicker-accent">00</span> — HERO</p>
+		<h1 class="hero-name hero-line">{t.hero.name}</h1>
+		<p class="hero-title hero-line">{t.hero.title}</p>
+		<p class="hero-tagline hero-line">{t.hero.tagline}</p>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.hero-canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	/* Fades the ASCII field out directly behind the text block so it stays
+	   legible no matter how dense the noise gets there — without this, dense
+	   clusters were running straight through the kicker/name/tagline. */
+	.hero-scrim {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background: radial-gradient(
+			ellipse min(48rem, 78vw) min(22rem, 60vh) at center,
+			var(--bg) 0%,
+			var(--bg) 45%,
+			transparent 85%
+		);
+		opacity: 0.92;
+		transition: opacity 0.45s ease;
+	}
+
+	/* During the "ANDRE POSMAN" click reveal, the real name/scrim step aside
+	   so the letters spelled out by the density field itself get the full
+	   canvas to sit dead-center in, instead of being squeezed into a sliver
+	   of the viewport that isn't covered by the scrim. */
+	.hero-scrim.egg-active,
+	.hero-content.egg-active {
+		opacity: 0;
+		transition: opacity 0.4s ease;
+	}
+
+	.hero-content {
+		transition: opacity 0.45s ease;
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		text-align: center;
+		padding: 0 1.5rem;
+		/* Purely decorative text overlay (no links/buttons) — without this it
+		   sits above the canvas and swallows clicks aimed at the hero-canvas
+		   easter egg anywhere behind the name/title/tagline block. */
+		pointer-events: none;
+	}
+
+	.hero-name {
+		font-size: clamp(2.5rem, 8vw, 5.5rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-title {
+		font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+		font-weight: 600;
+		color: var(--fg-dim);
+	}
+
+	.hero-tagline {
+		font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+		color: var(--fg-dim);
+		max-width: 32rem;
+	}
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { initAsciiField } from '../scripts/ascii-field';
+
+	const canvas = document.querySelector<HTMLCanvasElement>('.hero-canvas');
+	if (canvas) initAsciiField(canvas);
+
+	// The "ANDRE POSMAN" click reveal spells itself out of the density field
+	// dead-center — the real name/scrim fade aside for the reveal's duration
+	// so there's no collision, then fade back once ascii-field.ts says it's over.
+	const scrim = document.querySelector('.hero-scrim');
+	const content = document.querySelector('.hero-content');
+	canvas?.addEventListener('asciiegg', (e) => {
+		const active = (e as CustomEvent<{ active: boolean }>).detail.active;
+		scrim?.classList.toggle('egg-active', active);
+		content?.classList.toggle('egg-active', active);
+	});
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const lines = document.querySelectorAll('.hero-line');
+
+	if (reduceMotion) {
+		gsap.set(lines, { opacity: 1, y: 0 });
+	} else {
+		gsap.set(lines, { opacity: 0, y: 24 });
+		gsap.to(lines, {
+			opacity: 1,
+			y: 0,
+			duration: 0.9,
+			ease: 'power3.out',
+			stagger: 0.12,
+			delay: 0.2,
+		});
+	}
+</script>

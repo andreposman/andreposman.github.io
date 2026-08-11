@@ -1,0 +1,177 @@
+---
+import type { en } from '../i18n/en';
+
+interface Props {
+	t: typeof en;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="timeline-section" id="timeline">
+	<div class="timeline-inner">
+		<p class="kicker"><span class="kicker-accent">03</span> — {t.timeline.kicker}</p>
+		<h2 class="section-heading reveal-line"
+			><span class="reveal-line-inner">{t.timeline.heading}</span></h2
+		>
+
+		<div class="timeline">
+			{
+				t.timeline.roles.map((r) => (
+					<div class="timeline-entry">
+						<div class="timeline-marker">
+							<span class="timeline-dot" />
+						</div>
+						<div class="timeline-content">
+							<span class="timeline-date">{r.date}</span>
+							<h3 class="timeline-role">
+								{r.company} — {r.role}
+							</h3>
+							<p class="timeline-desc" set:html={r.description} />
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.timeline-section {
+		padding: 0 1.5rem 8rem;
+	}
+
+	.timeline-inner {
+		max-width: 64rem;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.timeline {
+		margin-top: 1.5rem;
+	}
+
+	.timeline-entry {
+		display: grid;
+		grid-template-columns: 2rem 1fr;
+		column-gap: 1.5rem;
+		position: relative;
+		padding-bottom: 3rem;
+	}
+
+	.timeline-entry:last-child {
+		padding-bottom: 0;
+	}
+
+	.timeline-marker {
+		position: relative;
+		display: flex;
+		justify-content: center;
+	}
+
+	.timeline-marker::before {
+		content: '';
+		position: absolute;
+		top: 1.3rem;
+		bottom: -3rem;
+		left: 50%;
+		width: 1px;
+		background: var(--fg-dim);
+		opacity: 0.35;
+		transform: translateX(-50%);
+	}
+
+	.timeline-entry:last-child .timeline-marker::before {
+		display: none;
+	}
+
+	.timeline-dot {
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 50%;
+		background: var(--accent);
+		margin-top: 0.5rem;
+		flex-shrink: 0;
+	}
+
+	.timeline-date {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--fg-dim);
+	}
+
+	.timeline-role {
+		font-family: var(--font-serif);
+		font-weight: 400;
+		font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+		margin: 0.3rem 0 0.6rem;
+	}
+
+	.timeline-desc {
+		color: var(--fg-dim);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		max-width: 38rem;
+	}
+
+	.timeline-desc :global(.accent) {
+		color: var(--accent);
+	}
+
+	.reveal-line {
+		display: block;
+		overflow: hidden;
+		margin: 0;
+	}
+
+	.reveal-line-inner {
+		display: block;
+	}
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const inners = document.querySelectorAll('.timeline-section .reveal-line-inner');
+	const entries = document.querySelectorAll('.timeline-entry');
+
+	if (reduceMotion) {
+		gsap.set(inners, { yPercent: 0, opacity: 1 });
+		gsap.set(entries, { opacity: 1, y: 0 });
+	} else {
+		gsap.set(inners, { yPercent: 110, opacity: 0 });
+		gsap.set(entries, { opacity: 0, y: 20 });
+		gsap.to(inners, {
+			yPercent: 0,
+			opacity: 1,
+			duration: 0.8,
+			ease: 'power4.out',
+			scrollTrigger: {
+				trigger: '.timeline-section',
+				start: 'top 70%',
+				toggleActions: 'play none none reverse',
+			},
+		});
+		gsap.to(entries, {
+			opacity: 1,
+			y: 0,
+			duration: 0.7,
+			ease: 'power3.out',
+			stagger: 0.15,
+			scrollTrigger: {
+				trigger: '.timeline',
+				start: 'top 75%',
+				toggleActions: 'play none none reverse',
+			},
+		});
+	}
+</script>

@@ -1,0 +1,76 @@
+export const en = {
+	nav: {
+		about: 'About',
+		projects: 'Projects',
+		timeline: 'Timeline',
+		contact: 'Contact',
+	},
+	hero: {
+		name: 'André Posman',
+		title: 'Backend & Platform Engineer',
+		tagline: 'Building distributed systems that scale across LATAM.',
+	},
+	about: {
+		kicker: 'ABOUT',
+		heading: 'Backend systems, platform reliability & AI-driven engineering.',
+		p1: 'Backend & Platform Engineer with 7+ years building distributed systems and cloud-native platforms. At Mercado Libre, I\'ve led backend and Kubernetes infrastructure work across LATAM — including a performance-testing platform that cut infra costs <span class="accent">50%</span>.',
+		p2: 'Today, I drive AI-powered engineering across my team — running workshops on LLM tooling, RAG pipelines, and agent-based workflows that automate repetitive platform operations. I\'ve shipped internal agents that handle cluster diagnostics, CRON job observability, and incident triage autonomously.',
+		education: 'Education',
+		eduList: [
+			'FIAP — Bachelor\'s in Computer Engineering (2013–2017)',
+			'FBr — MBA Full Cycle Software Architecture (2023–2024)',
+		],
+		languages: 'Languages',
+		langList: ['Portuguese (native)', 'English (fluent)', 'Spanish (professional)'],
+		international: 'International',
+		intlText: 'Awarded a scholarship to study Project Management & Business English at Ohio University. Completed a beginner German course in Munich.',
+	},
+	projects: {
+		kicker: 'PROJECTS',
+		heading: 'GitHub.',
+		stars: 'stars',
+		fallbackTitle: 'Recent work',
+	},
+	timeline: {
+		kicker: 'TIMELINE',
+		heading: 'Career timeline.',
+		roles: [
+			{
+				date: 'Apr 2021 — Present',
+				company: 'MercadoLibre',
+				role: 'Backend Engineer, Platform Engineer',
+				description: 'Led PTP perf platform (<span class="accent">50%</span> infra savings), Fury Core K8s cluster provisioning, and Kairos distributed CRON scheduling across LATAM.',
+			},
+			{
+				date: 'Jun 2019 — Apr 2021',
+				company: 'Dafiti',
+				role: 'Software Engineer',
+				description: 'Decoupled checkout from monolith into Golang + Node.js/TS microservices with React, GraphQL, and RabbitMQ.',
+			},
+			{
+				date: 'Sep 2018 — Jun 2019',
+				company: 'Wipro',
+				role: 'Full Stack Developer',
+				description: 'Full-stack across Python, C#, JS — invoice crawlers for Claro, broker-platform rebuild for Bradesco, and regulatory portals for Febraban.',
+			},
+		],
+	},
+	contact: {
+		kicker: 'CONTACT',
+		heading: 'Let\'s talk.',
+		nameLabel: 'Name',
+		namePlaceholder: 'Your name',
+		emailLabel: 'Email',
+		emailPlaceholder: 'your@email.com',
+		messageLabel: 'Message',
+		messagePlaceholder: 'Tell me about your project or opportunity...',
+		submit: 'Send message',
+		linkedinLabel: 'LINKEDIN',
+		linkedinValue: 'in/andreposman',
+		githubLabel: 'GITHUB',
+		githubValue: 'andreposman',
+	},
+	footer: {
+		builtWith: 'Built with Astro & GSAP',
+	},
+};

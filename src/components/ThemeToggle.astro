@@ -1,0 +1,58 @@
+---
+---
+
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme">
+	<span class="theme-toggle-glyph" aria-hidden="true">🌙</span>
+</button>
+
+<style>
+	.theme-toggle {
+		position: fixed;
+		top: 1.25rem;
+		right: 1.25rem;
+		z-index: 10;
+		width: 2.5rem;
+		height: 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--fg-dim);
+		border-radius: 50%;
+		background: var(--bg);
+		background: color-mix(in srgb, var(--bg) 80%, transparent);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		color: var(--fg);
+		font-size: 1.1rem;
+		line-height: 1;
+		cursor: pointer;
+		transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+	}
+
+	.theme-toggle:hover {
+		border-color: var(--accent);
+	}
+</style>
+
+<script>
+	const STORAGE_KEY = 'theme';
+	const root = document.documentElement;
+	const button = document.getElementById('theme-toggle');
+	const glyph = button?.querySelector('.theme-toggle-glyph');
+
+	function syncGlyph() {
+		const theme = root.getAttribute('data-theme');
+		if (glyph) glyph.textContent = theme === 'light' ? '☀' : '🌙';
+		button?.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+	}
+
+	button?.addEventListener('click', () => {
+		const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+		root.setAttribute('data-theme', next);
+		localStorage.setItem(STORAGE_KEY, next);
+		window.dispatchEvent(new CustomEvent('themechange'));
+		syncGlyph();
+	});
+
+	syncGlyph();
+</script>

@@ -1,0 +1,175 @@
+---
+import type { en } from '../i18n/en';
+
+interface Props {
+	t: typeof en;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="about" id="about">
+	<hr class="hr-divider about-divider-top" />
+	<div class="about-inner">
+		<p class="kicker"><span class="kicker-accent">01</span> — {t.about.kicker}</p>
+
+		<h2 class="section-heading reveal-line"
+			><span class="reveal-line-inner">{t.about.heading}</span></h2
+		>
+
+		<div class="about-columns">
+			<p class="reveal-line"
+				><span class="reveal-line-inner" set:html={t.about.p1} /></p
+			>
+			<p class="reveal-line"
+				><span class="reveal-line-inner" set:html={t.about.p2} /></p
+			>
+		</div>
+
+		<div class="about-extras">
+			<div class="about-extra-block">
+				<h3 class="about-extra-heading">{t.about.education}</h3>
+				<ul class="about-list">
+					{t.about.eduList.map((item) => <li>{item}</li>)}
+				</ul>
+			</div>
+			<div class="about-extra-block">
+				<h3 class="about-extra-heading">{t.about.languages}</h3>
+				<ul class="about-list">
+					{t.about.langList.map((item) => <li>{item}</li>)}
+				</ul>
+			</div>
+			<div class="about-extra-block">
+				<h3 class="about-extra-heading">{t.about.international}</h3>
+				<p class="about-list about-list-p">{t.about.intlText}</p>
+			</div>
+		</div>
+	</div>
+
+	<hr class="hr-divider about-divider" />
+</section>
+
+<style>
+	.about {
+		padding: 8rem 1.5rem 5rem;
+	}
+
+	.about-inner {
+		max-width: 64rem;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.section-heading {
+		max-width: 40rem;
+	}
+
+	.about-columns {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2.5rem;
+		margin-top: 1rem;
+	}
+
+	.about-columns p {
+		font-size: clamp(1rem, 1.4vw, 1.15rem);
+		line-height: 1.6;
+		color: var(--fg-dim);
+	}
+
+	.about-extras {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--fg-dim);
+	}
+
+	.about-extra-heading {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--fg-dim);
+		margin-bottom: 0.75rem;
+	}
+
+	.about-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.about-list li,
+	.about-list-p {
+		font-size: 0.9rem;
+		color: var(--fg-dim);
+		line-height: 1.5;
+	}
+
+	@media (max-width: 50rem) {
+		.about-columns,
+		.about-extras {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.reveal-line {
+		display: block;
+		overflow: hidden;
+		margin: 0;
+	}
+
+	.reveal-line-inner {
+		display: block;
+	}
+
+	.accent {
+		color: var(--accent);
+		transition: color 0.3s ease;
+	}
+
+	.about-divider {
+		max-width: 64rem;
+		margin: 5rem auto 0;
+	}
+
+	.about-divider-top {
+		max-width: 64rem;
+		margin: 0 auto 5rem;
+	}
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const inners = document.querySelectorAll('.about .reveal-line-inner');
+
+	if (reduceMotion) {
+		gsap.set(inners, { yPercent: 0, opacity: 1 });
+	} else {
+		gsap.set(inners, { yPercent: 110, opacity: 0 });
+		gsap.to(inners, {
+			yPercent: 0,
+			opacity: 1,
+			duration: 0.8,
+			ease: 'power4.out',
+			stagger: 0.12,
+			scrollTrigger: {
+				trigger: '.about',
+				start: 'top 70%',
+				toggleActions: 'play none none reverse',
+			},
+		});
+	}
+</script>
