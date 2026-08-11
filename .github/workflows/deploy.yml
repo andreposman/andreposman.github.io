@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -17,11 +19,8 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Deploy to andreposman.github.io
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.PAGES_TOKEN }}
-          external_repository: andreposman/andreposman.github.io
-          publish_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: '' # remove if using custom domain
