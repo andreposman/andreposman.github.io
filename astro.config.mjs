@@ -11,4 +11,9 @@ export default defineConfig({
 			prefixDefaultLocale: false,
 		},
 	},
+	vite: {
+		build: {
+			cssMinify: 'esbuild',
+		},
+	},
 });
