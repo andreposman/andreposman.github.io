@@ -475,6 +475,33 @@ export function initAsciiField(canvas: HTMLCanvasElement): () => void {
 		canvas.dispatchEvent(new CustomEvent('asciiegg', { detail: { active: true } }));
 	}
 
+	// Mobile tap detection: iOS/Android can be unreliable about synthesizing
+	// a `click` on a non-interactive <canvas>, so we listen for touchend
+	// directly and treat a short, low-movement touch as the same tap. A
+	// scroll/swipe (larger movement) is ignored so the easter egg doesn't
+	// fire mid-scroll. fireEgg()'s eggActive guard makes the extra path safe
+	// to overlap with a real click on devices that fire both.
+	let touchStartX = 0;
+	let touchStartY = 0;
+	let touchStartTime = 0;
+
+	function onTouchStart(e: TouchEvent) {
+		const t = e.touches[0];
+		if (!t) return;
+		touchStartX = t.clientX;
+		touchStartY = t.clientY;
+		touchStartTime = Date.now();
+	}
+
+	function onTouchEnd(e: TouchEvent) {
+		const t = e.changedTouches[0];
+		if (!t) return;
+		const dx = t.clientX - touchStartX;
+		const dy = t.clientY - touchStartY;
+		const dt = Date.now() - touchStartTime;
+		if (Math.hypot(dx, dy) < 10 && dt < 500) fireEgg();
+	}
+
 	// Lines up the next unprompted appearance of the full name string. Never
 	// called at all under prefers-reduced-motion (see the !reduceMotion guard
 	// at the bottom of this function's call sites) — a fully static field
@@ -530,6 +557,8 @@ export function initAsciiField(canvas: HTMLCanvasElement): () => void {
 		window.addEventListener('pointermove', onPointerMove);
 		window.addEventListener('pointerleave', onPointerLeave);
 		canvas.addEventListener('click', fireEgg);
+		canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+		canvas.addEventListener('touchend', onTouchEnd);
 		document.addEventListener('visibilitychange', onVisibilityChange);
 		rafId = requestAnimationFrame(tick);
 		scheduleNextNameReveal(true);
@@ -547,6 +576,8 @@ export function initAsciiField(canvas: HTMLCanvasElement): () => void {
 		window.removeEventListener('pointermove', onPointerMove);
 		window.removeEventListener('pointerleave', onPointerLeave);
 		canvas.removeEventListener('click', fireEgg);
+		canvas.removeEventListener('touchstart', onTouchStart);
+		canvas.removeEventListener('touchend', onTouchEnd);
 		document.removeEventListener('visibilitychange', onVisibilityChange);
 	};
 }
