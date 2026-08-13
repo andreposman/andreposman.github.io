@@ -196,7 +196,11 @@ export function initAsciiField(canvas: HTMLCanvasElement): () => void {
 	const mouse = { x: -9999, y: -9999 };
 
 	function computeCellSize(w: number, h: number): number {
-		let size = BASE_CELL;
+		// Narrow screens get a finer grid (more cells across) so the
+		// click-reveal letters keep enough cells per character to stay
+		// legible. The default 16px grid only leaves ~4 cells per character
+		// on a phone, which reads as a smudge rather than "ANDRE POSMAN".
+		let size = w < 600 ? 12 : BASE_CELL;
 		while (Math.ceil(w / size) * Math.ceil(h / size) > MAX_CELLS) {
 			size += 2;
 		}
