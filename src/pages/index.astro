@@ -11,8 +11,7 @@ import About from '../components/About.astro';
 import GitHubProjects from '../components/GitHubProjects.astro';
 import Timeline from '../components/Timeline.astro';
 import Contact from '../components/Contact.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
-import LangSwitch from '../components/LangSwitch.astro';
+import Nav from '../components/Nav.astro';
 
 const locale = Astro.currentLocale ?? 'en';
 const dict = t(locale);
@@ -35,8 +34,7 @@ const dict = t(locale);
 		<title>André Posman — Backend & Platform Engineer</title>
 	</head>
 	<body>
-		<LangSwitch />
-		<ThemeToggle />
+		<Nav t={dict} />
 		<Hero t={dict} />
 		<About t={dict} />
 		<GitHubProjects lang={t} />

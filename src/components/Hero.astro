@@ -12,7 +12,6 @@ const { t } = Astro.props;
 	<canvas class="hero-canvas" aria-hidden="true"></canvas>
 	<div class="hero-scrim" aria-hidden="true"></div>
 	<div class="hero-content">
-		<p class="kicker hero-line"><span class="kicker-accent">00</span> — HERO</p>
 		<h1 class="hero-name hero-line">{t.hero.name}</h1>
 		<p class="hero-title hero-line">{t.hero.title}</p>
 		<p class="hero-tagline hero-line">{t.hero.tagline}</p>
@@ -83,20 +82,26 @@ const { t } = Astro.props;
 	}
 
 	.hero-name {
-		font-size: clamp(2.5rem, 8vw, 5.5rem);
-		font-weight: 700;
-		letter-spacing: -0.02em;
+		font-family: var(--font-mono);
+		font-size: clamp(2.25rem, 7vw, 4.75rem);
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
 	}
 
 	.hero-title {
-		font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-		font-weight: 600;
+		font-family: var(--font-mono);
+		font-size: clamp(0.95rem, 2vw, 1.15rem);
+		font-weight: 500;
+		letter-spacing: 0.06em;
 		color: var(--fg-dim);
 	}
 
 	.hero-tagline {
-		font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+		font-family: var(--font-mono);
+		font-size: clamp(0.9rem, 1.8vw, 1.05rem);
 		color: var(--fg-dim);
+		letter-spacing: 0.02em;
 		max-width: 32rem;
 	}
 </style>

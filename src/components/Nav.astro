@@ -1,0 +1,122 @@
+---
+import type { en } from '../i18n/en';
+import LangSwitch from './LangSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+	t: typeof en;
+}
+
+const { t } = Astro.props;
+
+const links = [
+	{ href: '#about', label: t.nav.about },
+	{ href: '#projects', label: t.nav.projects },
+	{ href: '#timeline', label: t.nav.timeline },
+	{ href: '#contact', label: t.nav.contact },
+];
+---
+
+<header class="nav">
+	<div class="nav-inner">
+		<a class="nav-brand" href="#hero" aria-label="André Posman — home">
+			André Posman
+		</a>
+
+		<nav class="nav-links" aria-label="Primary">
+			{links.map((link) => (
+				<a class="nav-link" href={link.href}>
+					{link.label}
+				</a>
+			))}
+		</nav>
+
+		<div class="nav-controls">
+			<LangSwitch />
+			<ThemeToggle />
+		</div>
+	</div>
+</header>
+
+<style>
+	.nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 20;
+		padding: 1rem 1.5rem;
+		background: color-mix(in srgb, var(--bg) 8%, transparent);
+		backdrop-filter: blur(36px) saturate(180%);
+		-webkit-backdrop-filter: blur(36px) saturate(180%);
+		border-bottom: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+	}
+
+	.nav-inner {
+		max-width: 68rem;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.nav-brand {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		font-weight: 500;
+		line-height: 1;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: var(--fg);
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 1.75rem;
+		margin-left: auto;
+	}
+
+	.nav-link {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--fg-dim);
+		text-decoration: none;
+		transition: color 0.25s ease;
+	}
+
+	.nav-link:hover {
+		color: var(--fg);
+	}
+
+	.nav-controls {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	@media (max-width: 52rem) {
+		.nav-inner {
+			flex-wrap: wrap;
+			gap: 0.75rem 1rem;
+		}
+
+		.nav-controls {
+			margin-left: auto;
+		}
+
+		.nav-links {
+			order: 3;
+			flex-basis: 100%;
+			margin-left: 0;
+			padding-top: 0.6rem;
+			border-top: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+			overflow-x: auto;
+			gap: 1.25rem;
+			padding-bottom: 0.1rem;
+		}
+	}
+</style>

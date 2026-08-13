@@ -14,6 +14,7 @@ export function initSmoothScroll() {
 	const lenis = new Lenis({
 		duration: reduceMotion ? 0 : 1.1,
 		smoothWheel: !reduceMotion,
+		anchors: true,
 	});
 
 	ScrollTrigger.scrollerProxy(document.body, {

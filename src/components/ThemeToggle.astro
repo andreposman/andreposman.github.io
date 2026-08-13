@@ -7,30 +7,23 @@
 
 <style>
 	.theme-toggle {
-		position: fixed;
-		top: 1.25rem;
-		right: 1.25rem;
-		z-index: 10;
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2.25rem;
+		height: 2.25rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border: 1px solid var(--fg-dim);
 		border-radius: 50%;
-		background: var(--bg);
-		background: color-mix(in srgb, var(--bg) 80%, transparent);
-		backdrop-filter: blur(6px);
-		-webkit-backdrop-filter: blur(6px);
+		background: transparent;
 		color: var(--fg);
-		font-size: 1.1rem;
+		font-size: 1rem;
 		line-height: 1;
 		cursor: pointer;
-		transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+		transition: color 0.3s ease, border-color 0.3s ease;
 	}
 
 	.theme-toggle:hover {
-		border-color: var(--accent);
+		border-color: var(--fg);
 	}
 </style>
 

@@ -81,6 +81,11 @@ p {
 	margin: 0;
 }
 
+/* Keep anchored sections clear of the fixed top nav. */
+section[id] {
+	scroll-margin-top: 6rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
